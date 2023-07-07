@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 
 
 public class GamePanel extends JPanel {
@@ -11,10 +10,17 @@ public class GamePanel extends JPanel {
     public static int panelWidth;
     public static int panelHeight;
 
+
+    public static int totalFps;
+
+    public static Game game;
+
     public GamePanel() {
         new Window(this, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.panelWidth = getWidth();
         this.panelHeight = getHeight();
+
+        game = new Game();
     }
 
     public void gameLoop() {
@@ -27,14 +33,13 @@ public class GamePanel extends JPanel {
         int timePassInSecond = 0;
 
         final double FPS = 60.0;
-        final double UPS = 25.0;
+        final double UPS = 20.0;
 
         final double timeToRender = 1 / FPS;
         final double timeToUpdate = 1 / UPS;
 
         int fpsCount = 0;
         int upsCount = 0;
-
 
         while (true) {
             currentTime = System.nanoTime() / 1000000000.0;
@@ -55,6 +60,8 @@ public class GamePanel extends JPanel {
 //                System.out.println("FPS: " + fpsCount);
 //                System.out.println("UPS: " + upsCount);
 //                System.out.println("\n");
+
+                totalFps = fpsCount;
 
                 fpsCount = 0;
                 upsCount = 0;
@@ -89,12 +96,16 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(new Color(1, 69, 12));
         graphics.fillRect(0, 0, getWidth(), getHeight());
 //        drawDevGrid(graphics);
 
-        Game.render(graphics);
+        game.render(graphics);
 
+        graphics.setColor(Color.white);
+        graphics.setFont(new Font("Ariel", 2, 15));
+        graphics.drawString("FPS: " + String.valueOf(GamePanel.totalFps), 25, 25);
+        graphics.drawString("Snake Length: " + String.valueOf(Node.length), 25, 45);
 
     }
 
@@ -111,7 +122,7 @@ public class GamePanel extends JPanel {
 
 
     private void update() {
-        Game.update();
+        game.update();
     }
 
 
