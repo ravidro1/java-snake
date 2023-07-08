@@ -5,7 +5,11 @@ import java.util.List;
 
 public class Snake {
 
+    GameState game;
+
     private int initLength = 5;
+    public int snakeLength = 0;
+
 
     private int x;
     private int y;
@@ -13,18 +17,20 @@ public class Snake {
     private int direction;
     private int size = 20;
 
-    public static final int speed = 20;
+    public final int speed = 20;
 
     private List<Node> nodeList = new ArrayList<Node>();
 
-    public Snake() {
+    public Snake(GameState game) {
         this.x = 175 + (int) (Math.random() * (GamePanel.panelWidth - 350));
         this.y = 175 + (int) (Math.random() * (GamePanel.panelHeight - 350));
         this.direction = (int) Math.ceil(Math.random() * 4);
-        System.out.println("sx: " + x);
-        System.out.println("sy: " + y);
+
         initNodes();
+
+        this.game = game;
     }
+
 
     private void initNodes() {
         int x = 0;
@@ -53,30 +59,31 @@ public class Snake {
             }
 
             nodeList.add(new Node(x, y, size));
+            snakeLength++;
         }
     }
 
 
     public void changeDirection(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case 38:
+            case KeyEvent.VK_UP:
                 if (direction == 1 || direction == 2 || nodeList.get(0).getX() == x)
                     return;
                 direction = 1;
                 break;
-            case 40:
+            case KeyEvent.VK_DOWN:
                 if (direction == 1 || direction == 2 || nodeList.get(0).getX() == x)
                     return;
                 direction = 2;
 
                 break;
-            case 37:
+            case KeyEvent.VK_LEFT:
                 if (direction == 3 || direction == 4 || nodeList.get(0).getY() == y)
                     return;
                 direction = 3;
 
                 break;
-            case 39:
+            case KeyEvent.VK_RIGHT:
                 if (direction == 3 || direction == 4 || nodeList.get(0).getY() == y)
                     return;
                 direction = 4;
@@ -184,12 +191,15 @@ public class Snake {
         }
 
         nodeList.add(new Node(newX, newY, size));
+        snakeLength++;
+
 
     }
 
 
     private void gameOver() {
         System.out.println("Game Over!!!");
+        game.setInGameOver(true);
     }
 }
 

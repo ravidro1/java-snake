@@ -13,7 +13,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        GamePanel.game.snake.changeDirection(e);
+        GamePanel.state.keyPressed(e);
     }
 
     @Override

@@ -3,7 +3,6 @@ import java.awt.*;
 
 public class Node {
 
-    public static int length = 0;
 
     private int x;
     private int y;
@@ -16,7 +15,6 @@ public class Node {
         this.x = x;
         this.y = y;
         this.size = size;
-        length++;
     }
 
 

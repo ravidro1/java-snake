@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 
 public class GamePanel extends JPanel {
     private static final int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
 
     public static KeyHandler keyHandler = new KeyHandler();
+    public static MouseHandler mouseHandler = new MouseHandler();
 
     public static int panelWidth;
     public static int panelHeight;
@@ -13,14 +15,18 @@ public class GamePanel extends JPanel {
 
     public static int totalFps;
 
-    public static Game game;
+    public static State state;
 
     public GamePanel() {
         new Window(this, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.panelWidth = getWidth();
         this.panelHeight = getHeight();
 
-        game = new Game();
+        state = new HomeState();
+        addMouseListener(mouseHandler);
+        addKeyListener(keyHandler);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void gameLoop() {
@@ -96,16 +102,9 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.setColor(new Color(1, 69, 12));
-        graphics.fillRect(0, 0, getWidth(), getHeight());
 //        drawDevGrid(graphics);
+        state.render(graphics);
 
-        game.render(graphics);
-
-        graphics.setColor(Color.white);
-        graphics.setFont(new Font("Ariel", 2, 15));
-        graphics.drawString("FPS: " + String.valueOf(GamePanel.totalFps), 25, 25);
-        graphics.drawString("Snake Length: " + String.valueOf(Node.length), 25, 45);
 
     }
 
@@ -122,7 +121,7 @@ public class GamePanel extends JPanel {
 
 
     private void update() {
-        game.update();
+        state.update();
     }
 
 
