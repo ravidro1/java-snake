@@ -22,6 +22,7 @@ public class GamePanel extends JPanel {
         this.panelWidth = getWidth();
         this.panelHeight = getHeight();
 
+
         state = new HomeState();
         addMouseListener(mouseHandler);
         addKeyListener(keyHandler);
@@ -106,17 +107,6 @@ public class GamePanel extends JPanel {
         state.render(graphics);
 
 
-    }
-
-    private void drawDevGrid(Graphics graphics) {
-        final int rectSize = 5;
-        graphics.setColor(Color.green);
-        for (int i = 0; i <= panelWidth / rectSize; i++) {
-            graphics.drawLine(i * rectSize, 0, i * rectSize, panelHeight);
-        }
-        for (int i = 0; i <= panelHeight / rectSize; i++) {
-            graphics.drawLine(0, i * rectSize, panelWidth, i * rectSize);
-        }
     }
 
 

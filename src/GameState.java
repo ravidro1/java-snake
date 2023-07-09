@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class GameState extends State {
 
@@ -10,9 +11,10 @@ public class GameState extends State {
     private boolean isGameStart = false;
     private boolean isInGameOver = false;
 
+    private final int UNIT_SIZE = 20;
 
     public GameState() {
-        snake = new Snake(this);
+        snake = new Snake(this, UNIT_SIZE);
 
         int appleX = 50 + (int) (Math.random() * (GamePanel.panelWidth - 100));
         int appleY = 50 + (int) (Math.random() * (GamePanel.panelHeight - 100));
@@ -46,18 +48,36 @@ public class GameState extends State {
             graphics.setFont(new Font("Ariel", 1, 40));
             DrawSting.draw(graphics, "GameOver", GamePanel.panelWidth / 2, GamePanel.panelHeight / 2);
             graphics.setFont(new Font("Ariel", 1, 20));
-            DrawSting.draw(graphics, "Press Any Key For Go To Game Over", GamePanel.panelWidth / 2, GamePanel.panelHeight / 2 + 150);
+            DrawSting.draw(graphics, "Press Space Key For Go To Game Over Screen", GamePanel.panelWidth / 2, GamePanel.panelHeight / 2 + 150);
         }
 
         graphics.setFont(new Font("Ariel", 2, 15));
         graphics.drawString("FPS: " + String.valueOf(GamePanel.totalFps), 25, 25);
         graphics.drawString("Snake Length: " + String.valueOf(snake.snakeLength), 25, 45);
+
+//        drawDevGrid(graphics);
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+
+//    private void drawDevGrid(Graphics graphics) {
+//        graphics.setColor(Color.green);
+//        for (int i = 0; i <= GamePanel.panelWidth / UNIT_SIZE; i++) {
+//            graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, GamePanel.panelHeight);
+//        }
+//        for (int i = 0; i <= GamePanel.panelHeight / UNIT_SIZE; i++) {
+//            graphics.drawLine(0, i * UNIT_SIZE, GamePanel.panelWidth, i * UNIT_SIZE);
+//        }
+//    }
 
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (isInGameOver) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && isInGameOver) {
             GamePanel.state = new GameOverState(snake.snakeLength);
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE && !isGameStart) isGameStart = true;
@@ -65,7 +85,6 @@ public class GameState extends State {
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE && isGameStart) setIsInPauseMode();
         if (isInPauseMode) return;
-        super.keyPressed(e);
         snake.changeDirection(e);
     }
 

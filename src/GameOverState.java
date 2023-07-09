@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class GameOverState extends State {
@@ -11,6 +12,7 @@ public class GameOverState extends State {
     private Button exitButton;
 
     public GameOverState(int snakeLength) {
+        System.out.println(this.getClass().toString());
         this.snakeLength = snakeLength;
 
         homeButton = new Button(GamePanel.panelWidth / 2 - 125, (int) (GamePanel.panelHeight * 0.45), 250, 50, "Go To Home Screen", Color.DARK_GRAY);
@@ -23,6 +25,7 @@ public class GameOverState extends State {
     }
 
     public void render(Graphics graphics) {
+
         graphics.setColor(new Color(0, 28, 48));
         graphics.fillRect(0, 0, GamePanel.panelWidth, GamePanel.panelHeight);
 
@@ -40,7 +43,6 @@ public class GameOverState extends State {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        super.mousePressed(e);
 
         if (homeButton.isClicked(e)) {
             GamePanel.state = new HomeState();
@@ -52,5 +54,10 @@ public class GameOverState extends State {
             System.exit(0);
 
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
     }
 }

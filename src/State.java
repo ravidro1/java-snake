@@ -2,20 +2,17 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class State {
+public abstract class State {
 
-    public void update() {
-    }
+    public abstract void update();
 
-    public void render(Graphics graphics) {
 
-    }
+    public abstract void render(Graphics graphics);
 
-    public void mousePressed(MouseEvent e) {
 
-    }
+    public abstract void mousePressed(MouseEvent e);
 
-    public void keyPressed(KeyEvent e) {
+    public abstract void keyPressed(KeyEvent e);
 
-    }
+
 }

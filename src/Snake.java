@@ -15,20 +15,21 @@ public class Snake {
     private int y;
 
     private int direction;
-    private int size = 20;
+    private int unitSize;
 
-    public final int speed = 20;
 
     private List<Node> nodeList = new ArrayList<Node>();
 
-    public Snake(GameState game) {
+    public Snake(GameState game, int unitSize) {
         this.x = 175 + (int) (Math.random() * (GamePanel.panelWidth - 350));
         this.y = 175 + (int) (Math.random() * (GamePanel.panelHeight - 350));
         this.direction = (int) Math.ceil(Math.random() * 4);
 
-        initNodes();
 
         this.game = game;
+        this.unitSize = unitSize;
+
+        initNodes();
     }
 
 
@@ -41,24 +42,24 @@ public class Snake {
             switch (direction) {
                 case 1:
                     x = this.x;
-                    y = this.y + (i * size);
+                    y = this.y + (i * unitSize);
                     break;
                 case 2:
                     x = this.x;
-                    y = this.y - (i * size);
+                    y = this.y - (i * unitSize);
                     break;
                 case 3:
-                    x = this.x + (i * size);
+                    x = this.x + (i * unitSize);
                     y = this.y;
                     break;
                 case 4:
-                    x = this.x - (i * size);
+                    x = this.x - (i * unitSize);
                     y = this.y;
                     break;
 
             }
 
-            nodeList.add(new Node(x, y, size));
+            nodeList.add(new Node(x, y, unitSize));
             snakeLength++;
         }
     }
@@ -95,7 +96,7 @@ public class Snake {
 
     public void render(Graphics graphics) {
         graphics.setColor(new Color(255, 0, 0));
-        graphics.fillRect(x, y, size, size);
+        graphics.fillRect(x, y, unitSize, unitSize);
 
         for (int i = 0; i < nodeList.size(); i++) {
             nodeList.get(i).render(graphics);
@@ -112,7 +113,7 @@ public class Snake {
     private void checkSnakeCollision() {
         for (int i = 2; i < nodeList.size(); i++) {
             Node currentNode = nodeList.get(i);
-            if (collision(currentNode.getX(), currentNode.getY(), size, size))
+            if (collision(currentNode.getX(), currentNode.getY(), unitSize, unitSize))
                 gameOver();
         }
     }
@@ -124,10 +125,10 @@ public class Snake {
     private void updateLoc() {
         int lastX = x;
         int lastY = y;
-        if (direction == 1) y += -speed;
-        else if (direction == 2) y += speed;
-        else if (direction == 3) x += -speed;
-        else if (direction == 4) x += speed;
+        if (direction == 1) y += -unitSize;
+        else if (direction == 2) y += unitSize;
+        else if (direction == 3) x += -unitSize;
+        else if (direction == 4) x += unitSize;
 
         for (int i = 0; i < nodeList.size(); i++) {
             int tempLastX = nodeList.get(i).getX();
@@ -155,8 +156,8 @@ public class Snake {
 
 
     public boolean collision(int otherX, int otherY, int otherWidth, int otherHeight) {
-        if ((x + size / 4 >= otherX && x + size / 4 <= otherX + otherWidth) || (x + size - size / 4 >= otherX && x + size - size / 4 <= otherX + otherWidth)) {
-            if ((y + size / 4 >= otherY && y + size / 4 <= otherY + otherHeight) || (y + size - size / 4 >= otherY && y + size - size / 4 <= otherY + otherHeight)) {
+        if ((x + 1 >= otherX && x + 1 <= otherX + otherWidth) || (x + unitSize - 1 >= otherX && x + unitSize - 1 <= otherX + otherWidth)) {
+            if ((y + 1 >= otherY && y + 1 <= otherY + otherHeight) || (y + unitSize - 1 >= otherY && y + unitSize - 1 <= otherY + otherHeight)) {
                 return true;
             }
         }
@@ -173,24 +174,24 @@ public class Snake {
         switch (lastNode.getDirection()) {
             case 1:
                 newX = lastNode.getX();
-                newY = lastNode.getY() + size;
+                newY = lastNode.getY() + unitSize;
                 break;
             case 2:
                 newX = lastNode.getX();
-                newY = lastNode.getY() - size;
+                newY = lastNode.getY() - unitSize;
                 break;
             case 3:
-                newX = lastNode.getX() + size;
+                newX = lastNode.getX() + unitSize;
                 newY = lastNode.getY();
                 break;
             case 4:
-                newX = lastNode.getX() - size;
+                newX = lastNode.getX() - unitSize;
                 newY = lastNode.getY();
                 break;
 
         }
 
-        nodeList.add(new Node(newX, newY, size));
+        nodeList.add(new Node(newX, newY, unitSize));
         snakeLength++;
 
 
