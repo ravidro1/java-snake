@@ -40,7 +40,7 @@ public class GamePanel extends JPanel {
         int timePassInSecond = 0;
 
         final double FPS = 60.0;
-        final double UPS = 20.0;
+        final double UPS = 7.0;
 
         final double timeToRender = 1 / FPS;
         final double timeToUpdate = 1 / UPS;

@@ -156,13 +156,23 @@ public class Snake {
 
 
     public boolean collision(int otherX, int otherY, int otherWidth, int otherHeight) {
-        if ((x + 1 >= otherX && x + 1 <= otherX + otherWidth) || (x + unitSize - 1 >= otherX && x + unitSize - 1 <= otherX + otherWidth)) {
-            if ((y + 1 >= otherY && y + 1 <= otherY + otherHeight) || (y + unitSize - 1 >= otherY && y + unitSize - 1 <= otherY + otherHeight)) {
+        if (x + 1 <= otherX + otherWidth && x + unitSize - 1 >= otherX) {
+            if (y + 1 <= otherY + otherHeight && y + unitSize - 1 >= otherY) {
                 return true;
             }
         }
         return false;
     }
+
+
+//    public boolean collision(int otherX, int otherY, int otherWidth, int otherHeight) {
+//        if ((x + 1 >= otherX && x + 1 <= otherX + otherWidth) || (x + unitSize - 1 >= otherX && x + unitSize - 1 <= otherX + otherWidth)) {
+//            if ((y + 1 >= otherY && y + 1 <= otherY + otherHeight) || (y + unitSize - 1 >= otherY && y + unitSize - 1 <= otherY + otherHeight)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public void addNode() {
 
